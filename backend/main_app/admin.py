@@ -2,6 +2,6 @@ from django.contrib import admin
 from .models import Todo
 
 class TodoAdmin(admin.ModelAdmin):
-    list_display = ('climb', 'grade', 'description', 'completed')
+    list_display = ('climb', 'grade', 'description', 'completed', 'user')
 
 admin.site.register(Todo)

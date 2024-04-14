@@ -49,6 +49,17 @@ INSTALLED_APPS = [
 
 CORS_ORIGIN_ALLOW_ALL = True # For Authenication? As per Authenication article
 
+CORS_ALLOW_CREDENTIALS = True # Suggested by Chat GTP due to error and now it works
+
+CORS_ALLOW_METHODS = [  # Suggested by Chat GTP due to error and now it works
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

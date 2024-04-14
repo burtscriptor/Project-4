@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Modal from './components/Modal';
 import axios from 'axios';
+// Below from Authentication Article
+import './App.css';
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import Login from "./components/Login";
+import Home from "./components/Home";
+import Navigation from './components/Navigation';
+import Logout from './components/Logout';
+// Above from Authentication Article
 
 const App = () => {
   const [modal, setModal] = useState(false);
@@ -94,6 +102,15 @@ const App = () => {
   };
 
   return (
+    <>
+    <BrowserRouter>
+        <Navigation></Navigation>
+        <Routes>
+          <Route path="/" element={<Home/>}/>
+          <Route path="/login" element={<Login/>}/>
+          <Route path="/logout" element={<Logout/>}/>
+        </Routes>
+      </BrowserRouter>
     <main className='content p-3 mb-2 bg-info'>
       <h1 className='text-black text-uppercase text-center my-4'> Task Manager</h1>
       <div className='row'>
@@ -117,6 +134,7 @@ const App = () => {
         />
       )}
     </main>
+    </>
   );
 };
 

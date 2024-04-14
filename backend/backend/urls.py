@@ -16,8 +16,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from project4 import views
+from main_app import views
 from rest_framework import routers
+from rest_framework_simplejwt import views as jwt_views # Authenication 
 
 router = routers.DefaultRouter()
 router.register(r'tasks', views.TodoView, 'task') # has to do with CRUD ops - the 
@@ -28,4 +29,11 @@ router.register(r'tasks', views.TodoView, 'task') # has to do with CRUD ops - th
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('token/', 
+          jwt_views.TokenObtainPairView.as_view(), # As per Authenication Article
+          name ='token_obtain_pair'),
+     path('token/refresh/', 
+          jwt_views.TokenRefreshView.as_view(), # As per Authenication Article
+          name ='token_refresh'),
+    path('', include('main_app.urls')),
 ]

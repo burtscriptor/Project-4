@@ -1,100 +1,81 @@
-import React, { Component } from 'react'
-// importing all of these classes from reactstrap module
+import React, { useState } from 'react';
 import {
-    Button,
-    Modal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter,
-    Form,
-    FormGroup,
-    Input,
-    Label,
-} from 'reactstrap'
+  Button,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Form,
+  FormGroup,
+  Input,
+  Label,
+} from 'reactstrap';
 
+const CustomModal = ({ activeItem, toggle, onSave }) => {
+  const [item, setItem] = useState(activeItem);
 
+  const handleChange = event => {
+    const { name, value, type, checked } = event.target;
+    const val = type === 'checkbox' ? checked : value;
+    setItem({ ...item, [name]: val });
+  };
 
-class CustomModal extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            activeItem: this.props.activeItem
-        };
-    }
+  return (
+    <Modal isOpen={true} toggle={toggle}>
+      <ModalHeader toggle={toggle}>Task Item</ModalHeader>
+      <ModalBody>
+        <Form>
+          <FormGroup>
+            <Label for="grade">Grade</Label>
+            <Input
+              type="number"
+              name="grade"
+              value={item.grade}
+              onChange={handleChange}
+              placeholder="Enter Grade"
+            />
+          </FormGroup>
 
-// To check if the check box is checked or not
-handleChange = event => {
-    let {name, value } = event.target;
-    if (event.target === "checkbox") {
-        value = event.target.checked;
-    }
-    const activeItem = {...this.state.activeItem, [name]: value };
-    this.setState({ activeItem })
+          <FormGroup>
+            <Label for="description">Description</Label>
+            <Input
+              type="text"
+              name="description"
+              value={item.description}
+              onChange={handleChange}
+              placeholder="Enter Description"
+            />
+          </FormGroup>
+
+          <FormGroup>
+            <Label for="climb">Climb Name</Label>
+            <Input
+              type="text"
+              name="climb"
+              value={item.climb}
+              onChange={handleChange}
+              placeholder="Enter Climb Name"
+            />
+          </FormGroup>
+
+          <FormGroup check>
+            <Label check>
+              <Input
+                type="checkbox"
+                name="completed"
+                checked={item.completed}
+                onChange={handleChange}
+              />
+              Completed
+            </Label>
+          </FormGroup>
+        </Form>
+      </ModalBody>
+      <ModalFooter>
+        <Button color="success" onClick={() => onSave(item)}>Save</Button>
+      </ModalFooter>
+    </Modal>
+  );
 };
-// rendering modal in the custommodal class received toggle and on save as props
-render() {
-    const { toggle, onSave } = this.props;
-    return(
-        <Modal isOpen={true} toggle={toggle} >
-            <ModalHeader toggle={toggle}>Task Item</ModalHeader>
-            <ModalBody>
-                <Form> 
-
-                     {/* 3 formgroup 1 title label */}
-                    <FormGroup>
-                        <Label for="grade">Grade</Label>
-                        <Input 
-                        type="number"
-                        name='grade' 
-                        value={this.state.activeItem.grade}
-                        onChange={this.handleChange}
-                        placeHolder="Enter Grade"
-                        />
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="description">Description</Label>
-                        <Input type="text"
-                        name='description' 
-                        value={this.state.activeItem.description}
-                        onChange={this.handleChange}
-                        placeHolder="Enter Description"
-                        />
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="climb">Climb Name</Label>
-                        <Input type="text"
-                        name='climb' 
-                        value={this.state.activeItem.climb}
-                        onChange={this.handleChange}
-                        placeHolder="Enter Climb Name"
-                        />
-
-                    </FormGroup>
-
-                    <FormGroup>
-                        <Label for="completed">
-                        <Input type="checkbox"
-                        name='completed' 
-                        value={this.state.activeItem.completed}
-                        onChange={this.handleChange}
-                        />
-                        Completed
-                        </Label>
-                    </FormGroup>
-                </Form>
-            </ModalBody>
-            <ModalFooter>
-                <Button color='success' onClick={() => onSave(this.state.activeItem)}
-                >Save</Button>
-            </ModalFooter>
-
-
-            </Modal>
-    );
-}
-
-}
 
 export default CustomModal;
